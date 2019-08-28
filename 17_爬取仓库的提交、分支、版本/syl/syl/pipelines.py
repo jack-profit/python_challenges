@@ -4,9 +4,11 @@ from syl.models import Repository, engine
 
 class SylPipeline(object):
     def process_item(self, item, spider):
-        item['commits'] = int(''.join(item['commits'].split(',')))
-        item['branches'] = int(item['branches'])
-        item['releases'] = int(item['releases'])
+        if item.get('commits'):
+            # repository isn't empty
+            item['commits'] = int(''.join(item['commits'].split(',')))
+            item['branches'] = int(''.join(item['branches'].split(',')))
+            item['releases'] = int(''.join(item['releases'].split(',')))
         self.session.add(Repository(**item))
         return item
 
