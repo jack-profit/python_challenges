@@ -30,7 +30,8 @@ def has_next_page(response):
 # 进入下一页
 def goto_next_page(driver):
     next_page_btn = driver.find_element_by_xpath('//li[contains(@class, "page-item")][2]/a')
-    next_page_btn.sendEvent(mouseEventType,mouseX)
+    # next_page_btn.sendEvent(mouseEventType,mouseX)
+    next_page_btn.click()
 
 # 等待页面加载完成
 def wait_page_return(driver, page):
@@ -48,7 +49,8 @@ def wait_page_return(driver, page):
 # 主函数
 def spider():
     # 创建 PhantomJS 的 webdriver
-    driver = webdriver.PhantomJS()
+    # driver = webdriver.PhantomJS()
+    driver = webdriver.Chrome()
     # 初始页面
     url = 'https://www.shiyanlou.com/courses/427'
     driver.get(url)
@@ -69,7 +71,7 @@ def spider():
         # 进入下一页
         goto_next_page(driver)
     # 将 results 使用 json 序列化并写入文件
-    with open('/home/shiyanlou/comments.json', 'w') as f:
+    with open('./comments.json', 'w') as f:
         f.write(json.dumps(results))
 
 if __name__ == '__main__':
